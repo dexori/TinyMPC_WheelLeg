@@ -1,0 +1,34 @@
+This project contains an extraction of the author's H7 C++ TinyMPC task,
+based on the algorithm
+described in:
+
+  K. Nguyen, S. Schoedel, A. Alavilli, B. Plancher and Z. Manchester,
+  "TinyMPC: Model-Predictive Control on Resource-Constrained
+  Microcontrollers," IEEE ICRA, 2024.
+
+Original TinyMPC project: https://github.com/TinyMPC/TinyMPC
+The upstream project is distributed under the MIT License.
+
+This is not an official TinyMPC release. The extracted solver uses fitted
+steady-state Riccati caches, not an exact finite-horizon recursion for arbitrary
+terminal costs.
+
+mpc/mcu/tinympc_task.cpp and its supporting solver/types/parameter table are
+extracted from 2026_H7balanceHero/2026_H7NewFrame/TDT_Task and
+TDT_Alg/tinympc_stm32/src. Board/global dependencies are replaced by explicit
+inputs and platform hooks. Numeric coefficients and the original solver logic
+are retained; empty coefficient arrays and one Eigen indexing expression are
+adapted for standard C++ portability. The original cache-generation rho issue,
+output scheduling, terminal approximation and lack of failure gating remain.
+The new MATLAB export is not a drop-in replacement for the legacy sparse table.
+
+Eigen is an external dependency, not vendored here. Eigen's own license applies
+to Eigen. The existing copyright/license notice in the Eigen.h wrapper is kept.
+
+The collision observer is extracted from the author's 2026_H7balanceHero
+perception.cpp and MCG.m. See collision_detection/NOTICE for provenance,
+extraction changes, and known legacy model issues.
+
+No complete robot firmware, motor driver, communication protocol, PCB design,
+or mechanical design is included in this repository.
+

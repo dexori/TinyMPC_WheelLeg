@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.16)
+project(wheelleg_mcu_task LANGUAGES CXX)
+
+find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+add_library(wheelleg_mcu STATIC tinympc_task.cpp admm.cpp)
+target_include_directories(wheelleg_mcu PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(wheelleg_mcu PUBLIC Eigen3::Eigen)
+target_compile_features(wheelleg_mcu PUBLIC cxx_std_11)
+if(NOT MSVC)
+    target_compile_options(wheelleg_mcu PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(test_mcu_task ../tests/test_mcu_task.cpp)
+    target_link_libraries(test_mcu_task PRIVATE wheelleg_mcu)
+    add_test(NAME wheelleg_mcu_task COMMAND test_mcu_task)
+endif()

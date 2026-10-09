@@ -1,0 +1,27 @@
+本目录提取自作者的 2026_H7balanceHero 工程，许可证沿用 TinyMPC-WheelLeg/MIT。
+
+来源：
+  2026_H7NewFrame/TDT_Task/src/perception.cpp
+    MomentumObserver、build_M/C/G/Q、AdmHysteresis、yaw 残差判定。
+  2026_H7NewFrame/TDT_Task/inc/perception.h
+    momentum_k1 和 yaw 阈值/计数。
+  matlab_balance_tandem/MCG.m
+    广义坐标、轮角逆解、质心位置、动能/势能和力矩映射。
+  matlab_balance_tandem/balance_Leg.m、balance_canshujisuan.m
+    MCG 参数计算必需的机构函数。
+
+提取差异：
+  MCU 文件集中在 mcu/；动量观测与 yaw 判定合并为 collision_detect.c。
+  以显式输入/模型和每实例状态替代整车类与全局/静态变量。
+  原积分公式、默认增益、legacy M/C/G 系数及启动经验项默认行为保留。
+  只输出分轴判据和 yaw 门控信号，不包含控制动作。
+  yaw stall 改成单拍事件；停用/错误时连同门控计数一起复位。
+  补充空指针、输入/参数有限性和计算溢出检查。
+  MATLAB 只保留 M/C/G/Tau，不包含线性化、LQR/MPC。
+  MATLAB C 改用 Christoffel 构造，并检查 Mdot=C+C' 与方程重建。
+  旧 C 数值系数没有同步改写，legacy 模型仍有已知一致性问题。
+
+理论关系参考 De Luca 等：Collision Detection and Safe Reaction with
+the DLR-III Lightweight Manipulator Arm，IROS 2006。
+https://www.diag.uniroma1.it/labrob/pub/papers/IROS06_DLR.pdf
+此引用不表示本代码复现论文全部方法或已经具备同样实验性能。

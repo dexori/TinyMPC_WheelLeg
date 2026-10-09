@@ -1,0 +1,24 @@
+build*/
+CMakeFiles/
+CMakeCache.txt
+Testing/
+*.mex*
+*.asv
+*.mat
+mpc/matlab/figures/
+mpc/matlab/generated/
+collision_detection/matlab/generated/
+__pycache__/
+*.pyc
+
+# Keep local reports and editor files out of the code repository.
+*.doc
+*.docx
+*.pdf
+*.tar.gz
+*.zip
+.~*
+*~
+.DS_Store
+.idea/
+.vscode/
